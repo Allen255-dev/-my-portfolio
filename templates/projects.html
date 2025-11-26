@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects - {{ personal_info.name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --blue-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 2px solid #ffffff;
+            border-radius: 25px;
+            background: transparent;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .back-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .project-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+        
+        .project-card:nth-child(2)::before {
+            background: var(--blue-gradient);
+        }
+        
+        .project-card:nth-child(3)::before {
+            background: var(--orange-gradient);
+        }
+        
+        .project-card:nth-child(4)::before {
+            background: var(--primary-gradient);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .project-description {
+            color: #b0b0b0;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .project-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #777;
+        }
+        
+        .project-link.primary {
+            background: var(--primary-gradient);
+            border: none;
+        }
+        
+        .project-link.primary:hover {
+            opacity: 0.9;
+        }
+        
+        .project-link.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #333;
+            border-color: #555;
+        }
+        
+        .project-link.disabled:hover {
+            background: #333;
+            border-color: #555;
+            transform: none;
+        }
+        
+        .demo-status {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            color: #666666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="/" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            <h1 class="page-title">My Projects</h1>
+            <p class="page-subtitle">A collection of my recent work and personal projects</p>
+        </div>
+        
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                <h3 class="project-title">{{ project.title }}</h3>
+                <p class="project-description">{{ project.description }}</p>
+                
+                <div class="tech-tags">
+                    {% for tech in project.technologies %}
+                    <span class="tech-tag">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div class="project-links">
+                    <a href="{{ project.github_url }}" target="_blank" class="project-link">
+                        <i class="fab fa-github"></i> Code
+                    </a>
+                    
+                    {% if project.has_live_demo %}
+                    <a href="{{ project.live_url }}" target="_blank" class="project-link primary">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    {% else %}
+                    <span class="project-link primary disabled" title="Live demo coming soon">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </span>
+                    {% endif %}
+                </div>
+                
+                {% if not project.has_live_demo %}
+                <div class="demo-status">Live demo coming soon</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © {{ current_year }} {{ personal_info.name }}. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        // Add confirmation for disabled live demo links
+        document.addEventListener('DOMContentLoaded', function() {
+            const disabledLinks = document.querySelectorAll('.project-link.disabled');
+            disabledLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Live demo for this project is coming soon! In the meantime, check out the code on GitHub.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

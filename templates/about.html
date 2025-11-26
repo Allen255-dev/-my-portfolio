@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="portfolio-container">
+    <div class="header-section">
+        <h1 class="name">ABOUT ME</h1>
+        <div class="title">MY SKILLS & EXPERIENCE</div>
+    </div>
+    
+    <div class="experience-section">
+        <div class="section-title">Skills</div>
+        {% for category, skills in skills.items() %}
+        <div style="margin-bottom: 20px;">
+            <h4 style="color: var(--primary-color); margin-bottom: 10px;">{{ category }}</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                {% for skill in skills %}
+                <span class="logo-item" style="height: 35px; padding: 0 15px;">{{ skill }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

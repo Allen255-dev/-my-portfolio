@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - {{ personal_info.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Back Button -->
+            <a href="{{ url_for('projects') }}" class="btn btn-outline-secondary mb-4">
+                ← Back to Projects
+            </a>
+
+            <!-- Project Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-4">{{ project.title }}</h1>
+                <p class="lead">{{ project.description }}</p>
+            </div>
+
+            <!-- Project Image -->
+            <div class="mb-4">
+                <img src="{{ url_for('static', filename='images/' + project.image) }}" 
+                     alt="{{ project.title }}" 
+                     class="img-fluid rounded shadow">
+            </div>
+
+            <!-- Project Details -->
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>About This Project</h4>
+                    <p class="mb-4">{{ project.description }}</p>
+
+                    <h5>Technologies Used</h5>
+                    <div class="mb-4">
+                        {% for tech in project.technologies %}
+                        <span class="badge bg-primary me-1 mb-1">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Project Links</h5>
+                            <div class="d-grid gap-2">
+                                {% if project.github_url and project.github_url != '#' %}
+                                <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark">
+                                    <i class="fab fa-github"></i> View Code
+                                </a>
+                                {% endif %}
+                                
+                                {% if project.live_url and project.live_url != '#' %}
+                                <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Live Demo
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="d-flex justify-content-between mt-5">
+                {% if project.id > 1 %}
+                <a href="{{ url_for('project_detail', project_id=project.id-1) }}" class="btn btn-outline-primary">
+                    ← Previous Project
+                </a>
+                {% endif %}
+                
+                {% if project.id < projects|length %}
+                <a href="{{ url_for('project_detail', project_id=project.id+1) }}" class="btn btn-outline-primary">
+                    Next Project →
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ personal_info.name }} - {{ personal_info.title }}</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --blue-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --orange-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+        
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .name {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+        
+        .bio {
+            font-size: 1.1rem;
+            color: #888888;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: 2px solid #ffffff;
+            border-radius: 25px;
+            background: transparent;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        /* Projects Section */
+        .projects {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .projects h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            background: var(--blue-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .project-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .project-list li {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .project-list li:nth-child(1) {
+            border-left-color: #667eea;
+        }
+        
+        .project-list li:nth-child(2) {
+            border-left-color: #4facfe;
+        }
+        
+        .project-list li:nth-child(3) {
+            border-left-color: #fa709a;
+        }
+        
+        .project-list li:hover {
+            transform: translateX(10px);
+            background: #222222;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #666666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <!-- Profile Picture -->
+            <div class="profile-pic">
+                <!-- Replace with your actual image path -->
+                <img src="{{ url_for('static', filename='images/' + personal_info.profile_image) }}" alt="{{ personal_info.name }}" class="profile-img" onerror="this.style.display='none'; this.parentNode.innerHTML='DA';">
+            </div>
+            
+            <h1 class="name">Hi, I'm {{ personal_info.name }}</h1>
+            <div class="title">{{ personal_info.title }}</div>
+            <p class="bio">{{ personal_info.bio }}</p>
+            
+            <div class="buttons">
+                <a href="/projects" class="btn">View My Work</a>
+                <a href="/contact" class="btn">Get In Touch</a>
+            </div>
+        </div>
+        
+        <!-- Projects Section -->
+        <div class="projects">
+            <h2>Featured Projects</h2>
+            <ul class="project-list">
+                {% for project in projects %}
+                <li>{{ project.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © {{ current_year }} {{ personal_info.name }}. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
